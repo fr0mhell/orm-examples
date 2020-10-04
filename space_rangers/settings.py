@@ -120,3 +120,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Shell Plus additional imports
+SHELL_PLUS = 'ipython'
+# loading of factories in shell_plus
+SHELL_PLUS_PRE_IMPORTS = [
+    'from space_rangers.factories import *',
+]
