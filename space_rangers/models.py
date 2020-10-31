@@ -1,17 +1,5 @@
-from uuid import uuid4
+from django.core.validators import MinValueValidator
 from django.db import models
-
-
-def get_uid():
-    return str(uuid4())
-
-
-class PilotQuerySet(models.QuerySet):
-    """"""
-
-
-class PilotManager(models.Manager):
-    """"""
 
 
 class Spaceship(models.Model):
@@ -26,12 +14,6 @@ class Spaceship(models.Model):
         max_length=128,
         verbose_name='Name',
     )
-    uid = models.CharField(
-        max_length=128,
-        primary_key=True,
-        unique=True,
-        default=get_uid,
-    )
     ship_class = models.CharField(
         max_length=1,
         choices=SpaceshipClassChoices.choices,
@@ -43,46 +25,50 @@ class Spaceship(models.Model):
         verbose_name='Speed',
         help_text='Spaceship speed',
     )
-    hp = models.IntegerField(
+    current_hp = models.IntegerField(
         default=0,
+        verbose_name='Hit Points',
+        help_text='Spaceship Hit Points',
+        validators=(
+            MinValueValidator(limit_value=0),
+        )
+    )
+    max_hp = models.IntegerField(
+        default=1,
         verbose_name='Hit Points',
         help_text='Spaceship Hit Points',
     )
     max_distance = models.IntegerField(
-        default=0,
+        default=1,
         verbose_name='Max Distance',
         help_text='Spaceship Max Distance for Hyper-jump',
     )
-
     pilot = models.OneToOneField(
         to='space_rangers.Pilot',
         blank=True,
         null=True,
         on_delete=models.CASCADE,
-        related_name='space_ship',
     )
 
+    def clean(self):
+        if self.current_hp > self.max_hp:
+            raise ValueError('`current_hp` must be less of equal to `max_hp`')
+
     class Meta:
-        ordering = ['-name', ]
-        db_table = 'spaceships'
-        unique_together = (
-            'name', 'ship_class',
-        )
+        ordering = ['name', ]
 
     def __str__(self):
         return self.name
 
 
 class Pilot(models.Model):
-    """"""
+    """Pilot model."""
     name = models.CharField(
         max_length=128,
         verbose_name='Name',
     )
     race = models.ForeignKey(
         to='space_rangers.Race',
-        blank=True,
-        null=True,
         on_delete=models.CASCADE,
         related_name='pilots',
     )
@@ -93,23 +79,37 @@ class Pilot(models.Model):
         related_query_name='all_pilots',
     )
 
+    class Meta:
+        ordering = ['name', ]
+
+    def __str__(self):
+        return self.name
+
 
 class Race(models.Model):
-    """"""
+    """Model representing Pilot's race."""
     name = models.CharField(
         max_length=128,
         verbose_name='Name',
     )
+
+    def __str__(self):
+        return self.name
 
 
 class Fraction(models.Model):
+    """Model representing Pilot's fraction."""
     name = models.CharField(
         max_length=128,
         verbose_name='Name',
     )
 
+    def __str__(self):
+        return self.name
+
 
 class PilotFraction(models.Model):
+    """Model representing Pilot's fraction."""
     pilot = models.ForeignKey(
         to=Pilot,
         on_delete=models.CASCADE,
@@ -118,3 +118,8 @@ class PilotFraction(models.Model):
         to=Fraction,
         on_delete=models.CASCADE,
     )
+
+    class Meta:
+        unique_together = (
+            'pilot', 'fraction',
+        )

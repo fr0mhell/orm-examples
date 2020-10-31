@@ -1,9 +1,10 @@
 django
 
-# Useful and powerful utils for Django
-django-extensions
 # More powerful Python console
 ipython
+
+# Useful and powerful utils for Django
+django-extensions
 
 # Fast creation of model instances. May be used in tests
 factory_boy
