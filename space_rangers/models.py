@@ -43,12 +43,17 @@ class Spaceship(models.Model):
         verbose_name='Max Distance',
         help_text='Spaceship Max Distance for Hyper-jump',
     )
-    pilot = models.OneToOneField(
+    pilot = models.ForeignKey(
         to='space_rangers.Pilot',
         blank=True,
         null=True,
         on_delete=models.CASCADE,
+        related_name='spaceships',
     )
+
+    @property
+    def hp(self):
+        return f'{self.current_hp} / {self.max_hp}'
 
     def clean(self):
         if self.current_hp > self.max_hp:
