@@ -1,0 +1,11 @@
+<p>Hello <b>{{ pilot.user.username }}!</b></p>
+
+<p>All your ships are ready for adventures!</p>
+
+<ul>
+{% for ship in pilot.spaceships.all %}
+    <li><b>{{ ship.name }}</b>: {{ ship.hp }}</li>
+{% endfor %}
+</ul>
+
+<p>Space adventures are waiting for you!</p>

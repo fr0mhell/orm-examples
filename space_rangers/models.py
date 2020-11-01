@@ -1,5 +1,6 @@
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Spaceship(models.Model):
@@ -90,6 +91,12 @@ class Pilot(models.Model):
         related_name='pilots',
         to='space_rangers.Fraction',
         related_query_name='all_spaceships',
+    )
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
 
     class Meta:

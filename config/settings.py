@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'space_rangers',
+    'emails',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,7 @@ SHELL_PLUS = 'ipython'
 SHELL_PLUS_PRE_IMPORTS = [
     'from space_rangers.factories import *',
 ]
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_FROM = 'no-reply@spaceships.com'
