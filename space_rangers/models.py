@@ -1,6 +1,8 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import Signal, receiver
 
 
 class Spaceship(models.Model):
@@ -116,6 +118,11 @@ class Pilot(models.Model):
         ships = self.spaceships.all()
         for ship in ships:
             ship.kill()
+
+
+@receiver(post_save, sender=Pilot)
+def my_handler(sender, instance, **kwargs):
+    print(f'Pilot {instance.name} saved!')
 
 
 class Race(models.Model):
