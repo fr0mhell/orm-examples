@@ -27,16 +27,14 @@ class Spaceship(models.Model):
     )
     current_hp = models.IntegerField(
         default=0,
-        verbose_name='Hit Points',
-        help_text='Spaceship Hit Points',
+        verbose_name='Current Hit Points',
         validators=(
             MinValueValidator(limit_value=0),
         )
     )
     max_hp = models.IntegerField(
         default=1,
-        verbose_name='Hit Points',
-        help_text='Spaceship Hit Points',
+        verbose_name='Maximum Hit Points',
     )
     max_distance = models.IntegerField(
         default=1,
@@ -81,14 +79,14 @@ class Pilot(models.Model):
         through='space_rangers.PilotFraction',
         related_name='pilots',
         to='space_rangers.Fraction',
-        related_query_name='all_pilots',
+        related_query_name='all_spaceships',
     )
 
     class Meta:
         ordering = ['name', ]
 
     def __str__(self):
-        return self.name
+        return f'{self.name} ({self.race})'
 
 
 class Race(models.Model):
