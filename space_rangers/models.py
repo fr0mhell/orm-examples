@@ -57,6 +57,16 @@ class Spaceship(models.Model):
         if self.current_hp > self.max_hp:
             raise ValueError('`current_hp` must be less of equal to `max_hp`')
 
+    def heal(self):
+        """Heal the spaceship."""
+        self.current_hp = self.max_hp
+        self.save()
+
+    def kill(self):
+        """Kill the spaceship."""
+        self.current_hp = 0
+        self.save()
+
     class Meta:
         ordering = ['name', ]
 
@@ -87,6 +97,18 @@ class Pilot(models.Model):
 
     def __str__(self):
         return f'{self.name} ({self.race})'
+
+    def heal_all(self):
+        """Heal all ships."""
+        ships = self.spaceships.all()
+        for ship in ships:
+            ship.heal()
+
+    def kill_all(self):
+        """Kill all ships."""
+        ships = self.spaceships.all()
+        for ship in ships:
+            ship.kill()
 
 
 class Race(models.Model):
@@ -121,6 +143,9 @@ class PilotFraction(models.Model):
         to=Fraction,
         on_delete=models.CASCADE,
     )
+
+    def __str__(self):
+        return self.fraction.name
 
     class Meta:
         unique_together = (
