@@ -1,4 +1,5 @@
 import logging
+import json
 
 logger = logging.getLogger('requests')
 
@@ -11,12 +12,12 @@ class MyMiddleware:
     def __call__(self, request):
         # Code to be executed for each request before
         # the view (and later middleware) are called.
-        logger.info('request logged')
+        logger.info(f'Request: {request.path}')
 
         response = self.get_response(request)
 
         # Code to be executed for each request/response after
         # the view is called.
-        logger.info('response logged')
+        logger.info(f'Response')
 
         return response

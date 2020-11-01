@@ -1,8 +1,10 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import Signal, receiver
+
+healed = Signal(providing_args=['instance', 'abc'])
 
 
 class Spaceship(models.Model):
@@ -107,11 +109,18 @@ class Pilot(models.Model):
     def __str__(self):
         return f'{self.name} ({self.race})'
 
+    def save(self, *args, **kwargs):
+        print('before Saving!')
+        super().save(*args, **kwargs)
+        print('after Saving!')
+
     def heal_all(self):
         """Heal all ships."""
         ships = self.spaceships.all()
         for ship in ships:
             ship.heal()
+
+        healed.send(sender=Pilot, instance=self, abc=1)
 
     def kill_all(self):
         """Kill all ships."""
@@ -120,9 +129,14 @@ class Pilot(models.Model):
             ship.kill()
 
 
+@receiver(pre_save, sender=Pilot)
+def pre_handler(sender, instance, **kwargs):
+    print(f'Pre-save for Pilot {instance.name}!')
+
+
 @receiver(post_save, sender=Pilot)
 def my_handler(sender, instance, **kwargs):
-    print(f'Pilot {instance.name} saved!')
+    print(f'Post-save for Pilot {instance.name}!')
 
 
 class Race(models.Model):

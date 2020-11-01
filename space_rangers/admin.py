@@ -1,5 +1,6 @@
 from django.contrib import admin
 from . import models
+from django.contrib import messages
 
 
 @admin.register(models.Spaceship)
@@ -28,6 +29,21 @@ class SpaceshipAdmin(admin.ModelAdmin):
         'pilot',
     )
 
+    actions = (
+        'heal_selected',
+        'kill_selected',
+    )
+
+    def heal_selected(self, request, queryset):
+        for obj in queryset:
+            obj.heal()
+
+        messages.success(request, 'All selected spaceships healed!')
+
+    def kill_selected(self, request, queryset):
+        for obj in queryset:
+            obj.kill()
+
 
 @admin.register(models.Race)
 class RaceAdmin(admin.ModelAdmin):
@@ -37,20 +53,6 @@ class RaceAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(models.Fraction)
-class FractionAdmin(admin.ModelAdmin):
-    """Admin class for `Fraction` model."""
-    search_fields = (
-        'name',
-    )
-
-
-class SpaceshipInline(admin.TabularInline):
-    """Inline class for `Spaceship` model."""
-    model = models.Spaceship
-    extra = 1
-
-
 class PilotFractionInline(admin.StackedInline):
     """Inline class for `PilotFraction` model."""
     model = models.PilotFraction
@@ -58,6 +60,23 @@ class PilotFractionInline(admin.StackedInline):
     autocomplete_fields = (
         'fraction',
     )
+
+
+@admin.register(models.Fraction)
+class FractionAdmin(admin.ModelAdmin):
+    """Admin class for `Fraction` model."""
+    search_fields = (
+        'name',
+    )
+    inlines = (
+        PilotFractionInline,
+    )
+
+
+class SpaceshipInline(admin.TabularInline):
+    """Inline class for `Spaceship` model."""
+    model = models.Spaceship
+    extra = 1
 
 
 @admin.register(models.Pilot)
