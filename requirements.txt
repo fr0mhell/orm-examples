@@ -8,3 +8,16 @@ django-extensions
 
 # Fast creation of model instances. May be used in tests
 factory_boy
+
+# Authentication system with 'batteries included'
+django-allauth
+
+# DRF
+djangorestframework
+# Auth API
+django-rest-auth
+# Bulk API
+djangorestframework-bulk
+
+# Swagger spec generator
+drf-yasg

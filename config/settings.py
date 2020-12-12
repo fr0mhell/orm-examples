@@ -35,11 +35,17 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
     'space_rangers',
     'emails',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework.authentication',
+    'allauth',
+    'allauth.account',
 ]
 
 MIDDLEWARE = [
@@ -53,7 +59,7 @@ MIDDLEWARE = [
     'space_rangers.middleware.MyMiddleware',
 ]
 
-ROOT_URLCONF = 'space_rangers.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
