@@ -5,6 +5,7 @@ from . import serializers, paginators
 from .generic.views import BaseViewSet
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 
 class PilotViewSet(
@@ -23,6 +24,9 @@ class PilotViewSet(
     )
     serializer_class = serializers.PilotSerializer
     pagination_class = paginators.SmallPagePagination
+    permission_classes = (
+        IsAuthenticated,
+    )
 
 
 class SpaceshipViewSet(
@@ -50,4 +54,7 @@ class SpaceshipViewSet(
     search_fields = (
         'name',
         'pilot__name',
+    )
+    permission_classes = (
+        AllowAny,
     )
