@@ -7,5 +7,5 @@ class PilotFilter(django_filters.rest_framework.FilterSet):
     class Meta:
         model = Pilot
         fields = {
-            'name': ['exact', 'in', ],
+            'name': ['icontains', ],
         }

@@ -1,7 +1,7 @@
-from rest_framework import mixins
+from rest_framework import mixins, response, status
 from rest_framework.viewsets import GenericViewSet
 from .. import models
-from . import serializers, paginators
+from . import serializers, paginators, filters
 from .generic.views import BaseViewSet
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
@@ -28,6 +28,7 @@ class PilotViewSet(
     permission_classes = (
         IsAuthenticated,
     )
+    filter_class = filters.PilotFilter
 
 
 class SpaceshipViewSet(
@@ -48,9 +49,16 @@ class SpaceshipViewSet(
         OrderingFilter,
         SearchFilter,
     )
+    ordering_fields = (
+        'name',
+        'ship_class',
+        'speed',
+        'pilot__name',
+    )
     filter_fields = (
         'ship_class',
         'speed',
+        'pilot__name',
     )
     search_fields = (
         'name',
@@ -60,4 +68,12 @@ class SpaceshipViewSet(
         AllowAny,
     )
 
-
+    @action(detail=True, methods=['POST'], url_name='heal-it')
+    # /spaceships/{id}/heal/
+    # detail=False
+    # /spaceships/heal/
+    def heal(self, request, pk=None):
+        """"""
+        ship = self.get_object()
+        ship.heal()
+        return response.Response(status=status.HTTP_200_OK)

@@ -2,7 +2,18 @@ from .. import models
 from rest_framework.serializers import ModelSerializer
 
 
+class RaceSerializer(ModelSerializer):
+
+    class Meta:
+        model = models.Race
+        fields = (
+            'id',
+            'name',
+        )
+
+
 class PilotShortInfoSerializer(ModelSerializer):
+    race = RaceSerializer()
 
     class Meta:
         model = models.Pilot
@@ -39,20 +50,10 @@ class FractionSerializer(ModelSerializer):
         )
 
 
-class RaceSerializer(ModelSerializer):
-
-    class Meta:
-        model = models.Race
-        fields = (
-            'id',
-            'name',
-        )
-
-
 class PilotSerializer(ModelSerializer):
-    race = RaceSerializer()
-    spaceships = SpaceshipSerializer(many=True)
-    fractions = FractionSerializer(many=True)
+    race = RaceSerializer(read_only=True)
+    spaceships = SpaceshipSerializer(many=True, required=False, read_only=True)
+    fractions = FractionSerializer(many=True, required=False, read_only=True)
 
     class Meta:
         model = models.Pilot
