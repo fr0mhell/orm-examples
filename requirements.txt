@@ -19,11 +19,11 @@ django-rest-auth
 # Bulk API
 djangorestframework-bulk
 
-# Swagger spec generator
-drf-yasg
-
 # Debug toolbar
 django-debug-toolbar
 
 # API filtering
 django-filter
+
+# Swagger spec generator
+drf-yasg

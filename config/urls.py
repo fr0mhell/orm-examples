@@ -18,4 +18,7 @@ urlpatterns = [
 
     # Bulk API endpoints
     path('api/space_rangers_bulk/', include('space_rangers.bulk_api.urls')),
+
+    # Bulk API endpoints
+    path('', include('api_docs.urls')),
 ]
