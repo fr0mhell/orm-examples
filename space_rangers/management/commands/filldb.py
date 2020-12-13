@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 import random
 from space_rangers import factories, models
 
-SPACESHIPS = 1000
+SPACESHIPS = 10000
 RACES = 5
 FRACTIONS = 20
 PILOTS = 200

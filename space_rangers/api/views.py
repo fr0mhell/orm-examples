@@ -2,6 +2,9 @@ from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 from .. import models
 from . import serializers, paginators
+from .generic.views import BaseViewSet
+from rest_framework.filters import OrderingFilter, SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class PilotViewSet(
@@ -35,3 +38,16 @@ class SpaceshipViewSet(
         'pilot__race',
     )
     serializer_class = serializers.SpaceshipSerializer
+    filter_backends = (
+        DjangoFilterBackend,
+        OrderingFilter,
+        SearchFilter,
+    )
+    filter_fields = (
+        'ship_class',
+        'speed',
+    )
+    search_fields = (
+        'name',
+        'pilot__name',
+    )

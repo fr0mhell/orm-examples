@@ -24,3 +24,6 @@ drf-yasg
 
 # Debug toolbar
 django-debug-toolbar
+
+# API filtering
+django-filter
