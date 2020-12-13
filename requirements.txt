@@ -21,3 +21,6 @@ djangorestframework-bulk
 
 # Swagger spec generator
 drf-yasg
+
+# Debug toolbar
+django-debug-toolbar

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework.authentication',
     'allauth',
     'allauth.account',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'space_rangers.middleware.MyMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -159,3 +161,8 @@ LOGGING = {
         },
     },
 }
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+    '0.0.0.0',
+]
