@@ -2,7 +2,19 @@ from .. import models
 from rest_framework.serializers import ModelSerializer
 
 
+class PilotShortInfoSerializer(ModelSerializer):
+
+    class Meta:
+        model = models.Pilot
+        fields = (
+            'id',
+            'name',
+            'race',
+        )
+
+
 class SpaceshipSerializer(ModelSerializer):
+    pilot = PilotShortInfoSerializer()
 
     class Meta:
         model = models.Spaceship
@@ -50,4 +62,5 @@ class PilotSerializer(ModelSerializer):
             'race',
             'user',
             'spaceships',
+            'fractions',
         )
