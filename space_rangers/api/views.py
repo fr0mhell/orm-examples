@@ -69,11 +69,12 @@ class SpaceshipViewSet(
     )
 
     @action(detail=True, methods=['POST'], url_name='heal-it')
-    # /spaceships/{id}/heal/
-    # detail=False
-    # /spaceships/heal/
-    def heal(self, request, pk=None):
-        """"""
+    def heal(self, request, pk):
+        """Heal selected ship"""
         ship = self.get_object()
         ship.heal()
-        return response.Response(status=status.HTTP_200_OK)
+        serializer = self.get_serializer(ship)
+        return response.Response(
+            data=serializer.data,
+            status=status.HTTP_200_OK,
+        )
