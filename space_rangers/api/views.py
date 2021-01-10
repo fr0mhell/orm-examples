@@ -78,3 +78,13 @@ class SpaceshipViewSet(
             data=serializer.data,
             status=status.HTTP_200_OK,
         )
+
+
+class FractionViewSet(
+    mixins.RetrieveModelMixin,
+    mixins.ListModelMixin,
+    GenericViewSet,
+):
+    """Read-only API for Fractions."""
+    queryset = models.Fraction.objects.all()
+    serializer_class = serializers.FractionSerializer
