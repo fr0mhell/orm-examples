@@ -27,3 +27,6 @@ django-filter
 
 # Swagger spec generator
 drf-yasg
+
+# Add CLI debugger
+ipdb
