@@ -17,6 +17,7 @@ class PilotViewSet(
     mixins.ListModelMixin,
     GenericViewSet,
 ):
+    """CRUD API for Pilots."""
     queryset = models.Pilot.objects.all().select_related(
         'race',
     ).prefetch_related(
@@ -39,6 +40,7 @@ class SpaceshipViewSet(
     mixins.ListModelMixin,
     GenericViewSet,
 ):
+    """CRUD API for Spaceships."""
     queryset = models.Spaceship.objects.all().select_related(
         'pilot',
         'pilot__race',
