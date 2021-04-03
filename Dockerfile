@@ -10,6 +10,7 @@ WORKDIR /home/www/app
 EXPOSE 8000
 
 ### Run Django server
+### The command executes when `docker run`, NOT when `docker build`
 CMD ["python", "manage.py", "runserver_plus", "0.0.0.0:8000"]
 
 ### Install base dependencies
