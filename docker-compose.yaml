@@ -23,3 +23,16 @@ services:
     ports:
       - "80:8000"
     command: ["gunicorn", "--bind", "0:8000", "config.wsgi"]
+    volumes:
+      - ./space_rangers:/home/www/app/space_rangers
+      - ./api_docs:/home/www/app/api_docs
+      - ./config:/home/www/app/config
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:12
+    environment:
+      - POSTGRES_DB=postgres_db
+      - POSTGRES_USER=postgres_user
+      - POSTGRES_PASSWORD=postgres_pwd

@@ -19,6 +19,9 @@ django-filter
 # Useful and powerful utils for Django
 django-extensions
 
+# PostgreSQL adapter
+psycopg2-binary
+
 # More powerful Python console
 ipython
 
