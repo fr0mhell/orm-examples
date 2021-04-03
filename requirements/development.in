@@ -1,0 +1,15 @@
+# Dev dependencies
+-r base.in
+
+# Debug toolbar
+django-debug-toolbar
+
+# Swagger spec generator
+drf-yasg
+
+# Required for `runserver_plus` work
+Werkzeug
+
+# Linters
+isort
+flake8
