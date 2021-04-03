@@ -6,13 +6,23 @@ ENV C_FORCE_ROOT=True
 ### Set default workdir inside container
 WORKDIR /home/www/app
 
+### Django port 8000 is externally awailable
+EXPOSE 8000
+
+### Run Django server
+CMD ["python", "manage.py", "runserver_plus", "0.0.0.0:8000"]
+
 ### Install base dependencies
-RUN apt-get update
-RUN apt-get install -y build-essential
-RUN apt-get install -y nginx  supervisor postgresql-client cron
-### Cleaning up unused files
-RUN apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
-RUN rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y build-essential && \
+    apt-get install -y \
+        nginx \
+        supervisor \
+        postgresql-client \
+        cron && \
+    # cleaning up unused files
+    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false  && \
+    rm -rf /var/lib/apt/lists/*
 
 ### Set Django environment with an argument. `development` if nothing passed
 ARG DJANGO_ENV=development
@@ -29,9 +39,3 @@ COPY . /home/www/app/
 
 ### Collect static
 RUN python3 manage.py collectstatic --noinput
-
-### Django port 8000 is externally awailable
-EXPOSE 8000
-
-### Run Django server
-CMD ["python", "manage.py", "runserver_plus", "0.0.0.0:8000"]
