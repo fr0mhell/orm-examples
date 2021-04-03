@@ -1,13 +1,13 @@
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, response, status
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
 
+from django_filters.rest_framework import DjangoFilterBackend
+
 from .. import models
 from . import filters, paginators, serializers
-from .generic.views import BaseViewSet
 
 
 class PilotViewSet(

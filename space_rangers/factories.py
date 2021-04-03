@@ -1,8 +1,9 @@
 from random import randint
 
-import factory
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+
+import factory
 from factory import django, fuzzy
 
 from . import models
