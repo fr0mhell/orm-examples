@@ -9,11 +9,14 @@ WORKDIR /home/www/app
 ### Set Django config
 ENV DJANGO_SETTINGS_MODULE=config.development
 
-### Add source code to container
-COPY . /home/www/app/
+### Add dependencies info
+COPY requirements /home/www/app/requirements
 
 ### Install dependencies
 RUN pip install --no-cache-dir --src=/src -r /home/www/app/requirements/development.txt
+
+### Add source code to container
+COPY . /home/www/app/
 
 ### Collect static
 RUN python3 manage.py collectstatic --noinput
