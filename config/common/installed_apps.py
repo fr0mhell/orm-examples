@@ -14,7 +14,6 @@ INSTALLED_APPS = [
     'rest_framework.authentication',
     'allauth',
     'allauth.account',
-    'debug_toolbar',
     'django_filters',
     'drf_yasg',
 ]
