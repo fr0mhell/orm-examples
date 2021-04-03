@@ -1,6 +1,7 @@
-from rest_framework.viewsets import GenericViewSet
 from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
 from rest_framework_bulk import mixins as bulk_mixins
+
 from .. import models
 from ..api import serializers
 

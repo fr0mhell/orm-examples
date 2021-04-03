@@ -1,5 +1,7 @@
-from django.core.management.base import BaseCommand
 import random
+
+from django.core.management.base import BaseCommand
+
 from space_rangers import factories, models
 
 SPACESHIPS = 10000
@@ -11,7 +13,8 @@ PILOTS = 200
 class Command(BaseCommand):
     """Custom `filldb` command.
 
-    Django commands docs: https://docs.djangoproject.com/en/3.1/howto/custom-management-commands/
+    Django commands docs:
+    https://docs.djangoproject.com/en/3.1/howto/custom-management-commands/
 
     """
     help = 'Fill DB with sample data'

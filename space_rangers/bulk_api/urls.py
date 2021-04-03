@@ -1,4 +1,5 @@
 from rest_framework_bulk.routes import BulkRouter
+
 from . import views
 
 router = BulkRouter()

@@ -1,10 +1,19 @@
-from django.core.validators import MinValueValidator
-from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.exceptions import ValidationError
+from django.db import models
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import Signal, receiver
 
 healed = Signal(providing_args=['instance', 'abc'])
+
+
+def validate_speed(value):
+    if 49 < value < 501:
+        raise ValidationError(
+            f'Wrong value for `speed` param. '
+            f'Your value {value} is not in the range [50, ... 500]'
+        )
 
 
 class Spaceship(models.Model):
@@ -29,6 +38,9 @@ class Spaceship(models.Model):
         default=100,
         verbose_name='Speed',
         help_text='Spaceship speed',
+        validators=(
+            validate_speed,
+        )
     )
     current_hp = models.IntegerField(
         default=0,
@@ -40,6 +52,9 @@ class Spaceship(models.Model):
     max_hp = models.IntegerField(
         default=1,
         verbose_name='Maximum Hit Points',
+        validators=(
+            MaxValueValidator(limit_value=1000),
+        )
     )
     max_distance = models.IntegerField(
         default=1,
@@ -54,13 +69,15 @@ class Spaceship(models.Model):
         related_name='spaceships',
     )
 
+    class Meta:
+        ordering = ['name', ]
+
+    def __str__(self):
+        return self.name
+
     @property
     def hp(self):
         return f'{self.current_hp} / {self.max_hp}'
-
-    def clean(self):
-        if self.current_hp > self.max_hp:
-            raise ValueError('`current_hp` must be less of equal to `max_hp`')
 
     def heal(self):
         """Heal the spaceship."""
@@ -72,11 +89,23 @@ class Spaceship(models.Model):
         self.current_hp = 0
         self.save()
 
-    class Meta:
-        ordering = ['name', ]
+    def full_clean(self, exclude=None, validate_unique=True):
+        return super().full_clean(exclude, validate_unique)
 
-    def __str__(self):
-        return self.name
+    def clean_fields(self, exclude=None):
+        return super().clean_fields(exclude)
+
+    def clean(self):
+        if self.current_hp > self.max_hp:
+            raise ValidationError({
+                'current_hp': '`current_hp` must be less of equal to `max_hp`'
+            })
+
+    def validate_unique(self, exclude=None):
+        return super().validate_unique(exclude)
+
+    def save(self, *args, **kwargs):
+        return super().save(*args, **kwargs)
 
 
 class Pilot(models.Model):

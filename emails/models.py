@@ -1,5 +1,6 @@
-from space_rangers.models import healed, Pilot
 from django.dispatch import Signal, receiver
+
+from space_rangers.models import Pilot, healed
 
 
 @receiver(healed, sender=Pilot)

@@ -1,21 +1,19 @@
 from django.contrib import admin
 from . import models
+from . import forms
 from django.contrib import messages
 
 
 @admin.register(models.Spaceship)
 class SpaceshipAdmin(admin.ModelAdmin):
     """Admin class for `Spaceship` model."""
+    form = forms.SpaceshipForm
     list_display = (
         'id',
         'name',
         'ship_class',
         'pilot',
         'hp',
-    )
-    readonly_fields = (
-        'current_hp',
-        'max_hp',
     )
     autocomplete_fields = (
         'pilot',
