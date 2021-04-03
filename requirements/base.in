@@ -27,3 +27,6 @@ factory_boy
 
 # Gunicorn web worker
 gunicorn
+
+# Swagger spec generator
+drf-yasg

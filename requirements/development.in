@@ -4,9 +4,6 @@
 # Debug toolbar
 django-debug-toolbar
 
-# Swagger spec generator
-drf-yasg
-
 # Required for `runserver_plus` work
 Werkzeug
 
