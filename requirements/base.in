@@ -1,0 +1,35 @@
+# Web framework
+django
+
+# Authentication system with 'batteries included'
+django-allauth
+
+# REST
+djangorestframework
+
+# Auth API
+django-rest-auth
+
+# Bulk API
+djangorestframework-bulk
+
+# API filtering
+django-filter
+
+# Useful and powerful utils for Django
+django-extensions
+
+# PostgreSQL adapter
+psycopg2-binary
+
+# More powerful Python console
+ipython
+
+# Fast creation of model instances. May be used in tests
+factory_boy
+
+# Gunicorn web worker
+gunicorn
+
+# Swagger spec generator
+drf-yasg

@@ -1,7 +1,6 @@
-from django.contrib import admin
-from . import models
-from . import forms
-from django.contrib import messages
+from django.contrib import admin, messages
+
+from . import forms, models
 
 
 @admin.register(models.Spaceship)

@@ -1,4 +1,3 @@
-import json
 import logging
 
 logger = logging.getLogger('requests')
@@ -18,6 +17,6 @@ class MyMiddleware:
 
         # Code to be executed for each request/response after
         # the view is called.
-        logger.info(f'Response')
+        logger.info('Response')
 
         return response
