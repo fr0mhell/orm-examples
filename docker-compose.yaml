@@ -7,6 +7,8 @@ services:
       context: .
     volumes:
       - ./:/home/www/app
+    ports:
+      - "8000:8000"
 
   backend-slim:
     build:
@@ -27,6 +29,7 @@ services:
       - ./space_rangers:/home/www/app/space_rangers
       - ./api_docs:/home/www/app/api_docs
       - ./config:/home/www/app/config
+      - ./emails:/home/www/app/emails
     depends_on:
       - postgres
 
