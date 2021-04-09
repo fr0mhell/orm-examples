@@ -1,4 +1,5 @@
 from .auth import *
+from .database import *
 from .installed_apps import *
 from .internationalization import *
 from .logging import *
