@@ -12,6 +12,9 @@ services:
     ports:
       - "8000:8000"
     command: ["python", "manage.py", "runserver_plus", "0.0.0.0:8000"]
+    depends_on:
+      - postgres
+      - redis
 
   backend-prod:
     build:
@@ -27,6 +30,7 @@ services:
       - ./space_rangers:/home/www/app/space_rangers
     depends_on:
       - postgres
+      - redis
 
   postgres:
     image: postgres:12
@@ -34,3 +38,10 @@ services:
       - POSTGRES_DB=postgres_db
       - POSTGRES_USER=postgres_user
       - POSTGRES_PASSWORD=postgres_pwd
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:5
+    ports:
+      - "6379:6379"

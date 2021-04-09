@@ -6,7 +6,7 @@ from rest_framework.viewsets import GenericViewSet
 
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .. import models
+from .. import models, tasks
 from . import filters, paginators, serializers
 
 
@@ -31,6 +31,12 @@ class PilotViewSet(
         IsAuthenticated,
     )
     filter_class = filters.PilotFilter
+
+    @action(detail=False, methods=['POST'], url_path='dummy-progress')
+    def dummy_progress(self, request, *args, **kwargs):
+        seconds = request.data['seconds']
+        tasks.dummy_progress(seconds)
+        return response.Response(status=status.HTTP_200_OK)
 
 
 class SpaceshipViewSet(
