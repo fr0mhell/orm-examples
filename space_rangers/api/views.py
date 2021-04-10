@@ -8,6 +8,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .. import models, tasks
 from . import filters, paginators, serializers
+from celery.result import AsyncResult
 
 
 class PilotViewSet(
@@ -34,9 +35,30 @@ class PilotViewSet(
 
     @action(detail=False, methods=['POST'], url_path='dummy-progress')
     def dummy_progress(self, request, *args, **kwargs):
-        seconds = request.data['seconds']
-        result = tasks.dummy_progress.delay(seconds)
-        return response.Response(status=status.HTTP_200_OK)
+        if seconds := request.data.get('seconds'):
+            result = tasks.dummy_progress.delay(seconds)
+
+            return response.Response(
+                status=status.HTTP_200_OK,
+                data={'task': result.id},
+            )
+
+        return response.Response(status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=False, methods=['POST'], url_path='dummy-result')
+    def dummy_result(self, request, *args, **kwargs):
+        if task_id := request.data.get('task_id'):
+            async_result = AsyncResult(task_id)
+
+            return response.Response(
+                status=status.HTTP_200_OK,
+                data={
+                    'status': async_result.state,
+                    'info': async_result.info,
+                },
+            )
+
+        return response.Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class SpaceshipViewSet(

@@ -46,7 +46,7 @@ services:
     ports:
       - "6379:6379"
 
-  celery_worker:
+  celery-worker:
     build:
       context: .
       args:
@@ -57,4 +57,5 @@ services:
       []
     command: celery -A config.celery:app worker --loglevel=INFO
     depends_on:
-      - backend-dev
+      - postgres
+      - redis
