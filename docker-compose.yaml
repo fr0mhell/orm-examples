@@ -2,36 +2,6 @@ version: '3'
 
 services:
 
-  backend-dev:
-    build:
-      context: .
-      args:
-        - DJANGO_ENV=development
-    volumes:
-      - ./:/home/www/app
-    ports:
-      - "8000:8000"
-    command: python manage.py runserver_plus 0.0.0.0:8000
-    depends_on:
-      - postgres
-      - redis
-
-  backend-prod:
-    build:
-      context: .
-      args:
-        - DJANGO_ENV=production
-    ports:
-      - "80:8000"
-    volumes:
-      - ./api_docs:/home/www/app/api_docs
-      - ./config:/home/www/app/config
-      - ./emails:/home/www/app/emails
-      - ./space_rangers:/home/www/app/space_rangers
-    depends_on:
-      - postgres
-      - redis
-
   postgres:
     image: postgres:12
     environment:
@@ -46,16 +16,40 @@ services:
     ports:
       - "6379:6379"
 
-  celery-worker:
+  backend-dev: &backend-dev
     build:
+      dockerfile: ./Dockerfile
       context: .
       args:
         - DJANGO_ENV=development
     volumes:
       - ./:/home/www/app
     ports:
-      []
-    command: celery -A config.celery:app worker --loglevel=INFO
+      - "8000:8000"
+    command: python manage.py runserver_plus 0.0.0.0:8000
     depends_on:
       - postgres
       - redis
+
+  backend-prod:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+      args:
+        - DJANGO_ENV=production
+    ports:
+      - "80:8000"
+    volumes:
+      - ./api_docs:/home/www/app/api_docs
+      - ./config:/home/www/app/config
+      - ./emails:/home/www/app/emails
+      - ./space_rangers:/home/www/app/space_rangers
+    depends_on:
+      - postgres
+      - redis
+
+  celery-worker:
+    <<: *backend-dev
+    ports:
+      []
+    command: celery -A config.celery:app worker --loglevel=INFO
