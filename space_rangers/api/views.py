@@ -35,7 +35,7 @@ class PilotViewSet(
     @action(detail=False, methods=['POST'], url_path='dummy-progress')
     def dummy_progress(self, request, *args, **kwargs):
         seconds = request.data['seconds']
-        tasks.dummy_progress(seconds)
+        result = tasks.dummy_progress.delay(seconds)
         return response.Response(status=status.HTTP_200_OK)
 
 

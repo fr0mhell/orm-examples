@@ -11,7 +11,7 @@ services:
       - ./:/home/www/app
     ports:
       - "8000:8000"
-    command: ["python", "manage.py", "runserver_plus", "0.0.0.0:8000"]
+    command: python manage.py runserver_plus 0.0.0.0:8000
     depends_on:
       - postgres
       - redis
@@ -45,3 +45,16 @@ services:
     image: redis:5
     ports:
       - "6379:6379"
+
+  celery_worker:
+    build:
+      context: .
+      args:
+        - DJANGO_ENV=development
+    volumes:
+      - ./:/home/www/app
+    ports:
+      []
+    command: celery -A config.celery:app worker --loglevel=INFO
+    depends_on:
+      - backend-dev

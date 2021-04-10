@@ -22,6 +22,12 @@ django-extensions
 # PostgreSQL adapter
 psycopg2-binary
 
+# Task queue
+celery
+
+# Task queue backend and broker
+redis
+
 # More powerful Python console
 ipython
 

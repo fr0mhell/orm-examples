@@ -18,9 +18,7 @@ RUN apt-get update && \
     apt-get install -y build-essential && \
     apt-get install -y \
         nginx \
-        supervisor \
-        postgresql-client \
-        cron && \
+        supervisor && \
     # cleaning up unused files
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false  && \
     rm -rf /var/lib/apt/lists/*
