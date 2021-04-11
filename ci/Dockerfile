@@ -13,16 +13,6 @@ EXPOSE 8000
 ### The command executes when `docker run`, NOT when `docker build`
 CMD ["gunicorn", "--bind", "0:8000", "config.wsgi"]
 
-### Install base dependencies
-RUN apt-get update && \
-    apt-get install -y build-essential && \
-    apt-get install -y \
-        nginx \
-        supervisor && \
-    # cleaning up unused files
-    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false  && \
-    rm -rf /var/lib/apt/lists/*
-
 ### Set Django environment with an argument. `development` if nothing passed
 ARG DJANGO_ENV=development
 ENV DJANGO_SETTINGS_MODULE=config.${DJANGO_ENV}
@@ -35,6 +25,3 @@ RUN pip install --no-cache-dir --src=/src -r /home/www/app/requirements/${DJANGO
 
 ### Add source code to container
 COPY . /home/www/app/
-
-### Collect static
-RUN python3 manage.py collectstatic --noinput
