@@ -9,8 +9,9 @@ WORKDIR /home/www/app
 ### Django port 8000 is externally available
 EXPOSE 8000
 
-### Run Django server
-CMD ["python", "manage.py", "runserver_plus", "0.0.0.0:8000"]
+### Run Django with Gunicorn
+### The command executes when `docker run`, NOT when `docker build`
+CMD ["gunicorn", "--bind", "0:8000", "config.wsgi"]
 
 ### Set Django environment with an argument. `development` if nothing passed
 ARG DJANGO_ENV=development
