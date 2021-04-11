@@ -60,6 +60,8 @@ services:
         - DJANGO_ENV=production
     volumes:
       - ./:/home/www/app
+    env_file:
+      - .env
 
   # Celery worker
   celery-worker:
