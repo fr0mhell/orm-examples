@@ -31,8 +31,7 @@ jobs:
       - name: Push to Docker Hub
         uses: docker/build-push-action@v2
         with:
-          dockerfile: ci/Dockerfile
-          context: .
+          context: ./ci/Dockerfile
           push: true
           tags: fr0mhell/django-examples:latest
 
