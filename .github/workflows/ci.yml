@@ -12,7 +12,6 @@ jobs:
   build:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
-    needs: tests
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
@@ -33,8 +32,9 @@ jobs:
           tags: fr0mhell/django-examples:latest
 
   deploy:
+    name: Deploy from Docker image
     runs-on: ubuntu-latest
-    needs: build_and_push_to_docker_hub
+    needs: build
     steps:
       - name: executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
