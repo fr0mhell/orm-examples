@@ -15,3 +15,9 @@ createsu:
 
 nginx:
 	docker-compose up -d backend celery-worker nginx
+
+rebuild-backend:
+	docker-compose stop backend celery-worker nginx
+	make build
+	make
+	make migrate
