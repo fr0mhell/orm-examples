@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import Signal, receiver
 
-healed = Signal(providing_args=['instance', 'abc'])
+healed = Signal()
 
 
 def validate_speed(value):

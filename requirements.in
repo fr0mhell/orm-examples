@@ -39,3 +39,15 @@ gunicorn
 
 # Swagger spec generator
 drf-yasg
+
+# --- Dev dependencies ---
+
+# Debug toolbar
+django-debug-toolbar
+
+# Required for `runserver_plus` work
+Werkzeug
+
+# Linters
+isort
+flake8
