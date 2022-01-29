@@ -1,0 +1,12 @@
+# Dev dependencies
+-r production.in
+
+# Debug toolbar
+django-debug-toolbar
+
+# Required for `runserver_plus` work
+Werkzeug
+
+# Linters
+isort
+flake8

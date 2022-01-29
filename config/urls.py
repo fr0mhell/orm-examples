@@ -7,7 +7,7 @@ urlpatterns = [
     path('manage/', admin.site.urls),
 
     # Auth API endpoints
-    path('api/auth/', include('rest_auth.urls')),
+    path('api/auth/', include('dj_rest_auth.urls')),
 
     # Default API endpoints
     path('api/space_rangers/', include('space_rangers.api.urls')),
