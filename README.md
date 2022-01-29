@@ -26,4 +26,84 @@ make createlocalsu
 
 ## Docker
 
+Собираем docker-образ проекта:
 
+```shell
+docker build . -t orm-examples
+```
+
+Создаем контейнер
+
+```shell
+docker create --name orm-examples -p 8000:8000 -v "$(pwd)":/home/www/app orm-examples
+```
+
+Список всех контейнеров
+
+```shell
+docker ps -a
+```
+
+Запускаем контейнер
+
+```shell
+docker start orm-examples
+```
+
+Открываем логи нашего контейнера
+
+```shell
+docker logs orm-examples
+```
+
+Останавливаем контейнер
+
+```shell
+docker stop orm-examples
+```
+
+Создаем пустую базу данных
+
+```shell
+mkdir db
+touch ./db/db.sqlite3
+```
+
+Запускаем контейнер
+
+```shell
+docker start orm-examples
+```
+
+Открываем логи нашего контейнера
+
+```shell
+docker logs orm-examples
+```
+
+Проваливаемся внутрь контейнера, применяем миграции, создаем суперпользователя и тестовые данные
+
+```shell
+docker exec -it orm-examples bash
+python3 manage.py migrate
+python3 manage.py createsuperuser --email root@root.ru --username root -v 3
+python3 manage.py filldb
+```
+
+Получаем информацию о контейнере
+
+```shell
+docker inspect orm-examples
+```
+
+Получаем информацию об IP-адресе
+
+```shell
+docker inspect orm-examples | grep -i "ipaddress"
+```
+
+Останавливаем и удаляем контейнер
+
+```shell
+docker stop orm-examples && docker rm orm-examples
+```
