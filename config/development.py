@@ -1,5 +1,7 @@
 from .common import *
 
+PROJECT_ENV = 'development'
+
 INSTALLED_APPS += [
     'debug_toolbar',
 ]

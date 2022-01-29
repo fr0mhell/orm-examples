@@ -26,6 +26,12 @@ make createlocalsu
 
 ## Docker
 
+---
+
+**Важное:** [Deleting docker entities](https://phoenixnap.com/kb/remove-docker-images-containers-networks-volumes)
+
+---
+
 Собираем docker-образ проекта:
 
 ```shell
@@ -106,4 +112,22 @@ docker inspect orm-examples | grep -i "ipaddress"
 
 ```shell
 docker stop orm-examples && docker rm orm-examples
+```
+
+## Docker-compose
+
+Собираем
+
+```shell
+docker-compose build
+```
+
+Запускаем
+
+```shell
+docker-compose up
+```
+
+```shell
+docker-compose up -d backend-dev
 ```

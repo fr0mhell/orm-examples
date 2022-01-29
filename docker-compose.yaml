@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  # Backend service
+  backend-dev:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+      args:
+        - DJANGO_ENV=development
+    volumes:
+      - ./db:/home/www/app/db
+    ports:
+      - "8000:8000"
+
+  backend-prod:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+      args:
+        - DJANGO_ENV=production
+    volumes:
+      - .:/home/www/app
+    ports:
+      - "80:8000"
+    command: python3 manage.py runserver 0.0.0.0:8000

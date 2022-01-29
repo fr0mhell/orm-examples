@@ -1,5 +1,7 @@
 from .common import *
 
+PROJECT_ENV = 'production'
+
 DEBUG = False
 
 # SECURITY WARNING: keep the secret key used in production secret!
