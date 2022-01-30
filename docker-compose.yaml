@@ -19,6 +19,11 @@ services:
        - db-dev
     links:
        - db-dev:db-dev
+    healthcheck:
+      test: curl --fail -s http://localhost:8000/ || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
 
   db-dev:
     image: postgres:12
