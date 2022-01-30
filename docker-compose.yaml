@@ -2,7 +2,6 @@ version: '3'
 
 services:
 
-  # Backend service
   backend-dev:
     build:
       dockerfile: ./Dockerfile
@@ -13,6 +12,24 @@ services:
       - ./db:/home/www/app/db
     ports:
       - "8000:8000"
+    networks:
+      - network-dev
+      - default
+    depends_on:
+       - db-dev
+    links:
+       - db-dev:db-dev
+
+  db-dev:
+    image: postgres:12
+    environment:
+      - POSTGRES_DB=dev_db
+      - POSTGRES_USER=dev_user
+      - POSTGRES_PASSWORD=dev_pwd
+    ports:
+      - "5432:5432"
+    networks:
+      - network-dev
 
   backend-prod:
     build:
@@ -25,3 +42,26 @@ services:
     ports:
       - "80:8000"
     command: python3 manage.py runserver 0.0.0.0:8000
+    networks:
+      - network-prod
+      - default
+    depends_on:
+       - db-prod
+    links:
+       - db-prod:db-prod
+
+  db-prod:
+    image: postgres:12
+    environment:
+      - POSTGRES_DB=prod_db
+      - POSTGRES_USER=prod_user
+      - POSTGRES_PASSWORD=prod_pwd
+    ports:
+      - "4321:5432"
+    networks:
+      - network-prod
+
+networks:
+  default:
+  network-dev:
+  network-prod:

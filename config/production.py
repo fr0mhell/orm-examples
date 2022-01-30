@@ -11,7 +11,11 @@ ALLOWED_HOSTS = ['*']
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': f'{BASE_DIR}/db/db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'prod_db',
+        'USER': 'prod_user',
+        'PASSWORD': 'prod_pwd',
+        'HOST': 'db-prod',
+        'PORT': 5432,
     }
 }
