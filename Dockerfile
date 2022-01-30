@@ -10,6 +10,11 @@ WORKDIR /home/www/app
 ARG DJANGO_ENV=development
 ENV DJANGO_SETTINGS_MODULE=config.${DJANGO_ENV}
 
+### Install curl
+RUN apt-get update && \
+    apt-get install -y \
+    curl
+
 ### Add dependencies info
 COPY requirements ./requirements
 

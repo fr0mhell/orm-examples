@@ -131,3 +131,29 @@ docker-compose up
 ```shell
 docker-compose up -d backend-dev
 ```
+
+### Сеть в docker-compose, часть 1
+
+Пересобираем контейнеры
+
+```shell
+docker-compose stop && docker-compose build
+```
+
+Заходим в контейнер `backend-prod`
+
+```shell
+docker exec -it orm-examples_backend-prod_1 bash
+```
+
+Стучимся в контейнер `backend-dev`
+
+```shell
+curl backend-dev
+```
+
+А теперь с указанием доступного порта
+
+```shell
+curl backend-dev:8000
+```
