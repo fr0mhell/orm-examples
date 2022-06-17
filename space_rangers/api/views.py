@@ -1,3 +1,5 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework import mixins, response, status
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
@@ -32,6 +34,11 @@ class PilotViewSet(
         IsAuthenticated,
     )
     filter_class = filters.PilotFilter
+
+    # Cache page for the requested url
+    @method_decorator(cache_page(60*60*2))
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
     @action(detail=False, methods=['POST'], url_path='dummy-progress')
     def dummy_progress(self, request, *args, **kwargs):

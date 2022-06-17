@@ -77,6 +77,16 @@ services:
     depends_on:
       - backend-prod
 
+  redis:
+    image: 'bitnami/redis:6.0.16'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - network-prod
+      - default
+    ports:
+      - "6379:6379"
+
 networks:
   default:
   network-dev:

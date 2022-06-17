@@ -7,8 +7,8 @@ migrate:
 createlocalsu:
 	python3 manage.py createsuperuser --email root@root.ru --username root -v 3
 
-start_db:
-	docker-compose up -d db-dev
+start-dev:
+	docker-compose up -d db-dev redis
 
 filldb:
 	python3 manage.py filldb
@@ -26,7 +26,7 @@ filldb-prod:
 	docker-compose exec -it backend-prod python manage.py filldb
 
 start-prod:
-	docker-compose up -d backend-prod db-prod nginx
+	docker-compose up -d backend-prod db-prod nginx redis
 
 collectstatic:
 	python manage.py collectstatic

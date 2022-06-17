@@ -28,6 +28,9 @@ celery
 # Task queue backend and broker
 redis
 
+# Cache
+django-redis
+
 # More powerful Python console
 ipython
 
