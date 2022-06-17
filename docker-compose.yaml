@@ -87,6 +87,36 @@ services:
     ports:
       - "6379:6379"
 
+  worker-dev:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+      args:
+        - DJANGO_ENV=development
+    volumes:
+      - ./db:/home/www/app/db
+      - ./:/home/www/app/
+    ports:
+      [ ]
+    command: celery -A config.celery:app worker --loglevel=INFO
+    depends_on:
+      - backend-dev
+
+  worker-prod:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+      args:
+        - DJANGO_ENV=production
+    volumes:
+      - ./db:/home/www/app/db
+      - ./:/home/www/app/
+    ports:
+      [ ]
+    command: celery -A config.celery:app worker --loglevel=INFO
+    depends_on:
+      - backend-prod
+
 networks:
   default:
   network-dev:
