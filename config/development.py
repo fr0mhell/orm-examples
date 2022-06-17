@@ -1,5 +1,7 @@
 from .common import *
 
+DEBUG = True
+
 PROJECT_ENV = 'development'
 
 INSTALLED_APPS += [
@@ -12,7 +14,7 @@ DATABASES = {
         'NAME': 'dev_db',
         'USER': 'dev_user',
         'PASSWORD': 'dev_pwd',
-        'HOST': 'db-dev',
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }
