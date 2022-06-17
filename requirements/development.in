@@ -1,5 +1,5 @@
 # Dev dependencies
--r base.in
+-r production.in
 
 # Debug toolbar
 django-debug-toolbar

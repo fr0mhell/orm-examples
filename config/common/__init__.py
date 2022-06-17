@@ -1,13 +1,12 @@
 from .auth import *
-from .database import *
 from .installed_apps import *
 from .internationalization import *
 from .logging import *
 from .middleware import *
-from .paths import *
 from .rest_framework import *
 from .static import *
 from .templates import *
+from .paths import *
 
 
 SITE_ID = 1

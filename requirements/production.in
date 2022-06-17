@@ -8,7 +8,7 @@ django-allauth
 djangorestframework
 
 # Auth API
-django-rest-auth
+dj-rest-auth
 
 # Bulk API
 djangorestframework-bulk

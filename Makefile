@@ -1,23 +1,8 @@
-build:
-	docker-compose build backend celery-worker
-
-db:
-	docker-compose up -d postgres redis
+makemig:
+	python3 manage.py makemigrations
 
 migrate:
-	docker-compose run backend python manage.py migrate
+	python3 manage.py migrate
 
-static:
-	docker-compose run backend python manage.py collectstatic --noinput
-
-createsu:
-	docker-compose run backend python manage.py createsuperuser
-
-nginx:
-	docker-compose up -d backend celery-worker nginx
-
-rebuild-backend:
-	docker-compose stop backend celery-worker nginx
-	make build
-	make
-	make migrate
+createlocalsu:
+	python3 manage.py createsuperuser --email root@root.ru --username root -v 3

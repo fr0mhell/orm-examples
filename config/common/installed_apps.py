@@ -16,6 +16,7 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'django_filters',
     'drf_yasg',
+    'dj_rest_auth',
 ]
 
 LOCAL_APPS = [
