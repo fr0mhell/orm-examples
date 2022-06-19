@@ -60,6 +60,7 @@ django==3.1
     #   django-allauth
     #   django-extensions
     #   django-filter
+    #   django-redis
     #   djangorestframework
     #   djangorestframework-bulk
     #   drf-yasg
@@ -68,6 +69,8 @@ django-allauth==0.47.0
 django-extensions==3.1.5
     # via -r ./requirements/production.in
 django-filter==21.1
+    # via -r ./requirements/production.in
+django-redis==5.2.0
     # via -r ./requirements/production.in
 djangorestframework==3.13.1
     # via
@@ -151,7 +154,9 @@ pytz==2021.3
     #   django
     #   djangorestframework
 redis==4.1.2
-    # via -r ./requirements/production.in
+    # via
+    #   -r ./requirements/production.in
+    #   django-redis
 requests==2.27.1
     # via
     #   coreapi
