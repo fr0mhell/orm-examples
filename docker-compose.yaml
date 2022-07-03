@@ -9,7 +9,7 @@ services:
       args:
         - DJANGO_ENV=development
     volumes:
-      - ./db:/home/www/app/db
+      - ./:/home/www/app/
     ports:
       - "8000:8000"
     networks:
@@ -31,6 +31,8 @@ services:
       - POSTGRES_DB=dev_db
       - POSTGRES_USER=dev_user
       - POSTGRES_PASSWORD=dev_pwd
+    volumes:
+      - ./db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
@@ -42,10 +44,8 @@ services:
       context: .
       args:
         - DJANGO_ENV=production
-    volumes:
-      - .:/home/www/app
     ports:
-      - "80:8000"
+      - "8000:8000"
     command: python3 manage.py runserver 0.0.0.0:8000
     networks:
       - network-prod
@@ -62,9 +62,55 @@ services:
       - POSTGRES_USER=prod_user
       - POSTGRES_PASSWORD=prod_pwd
     ports:
-      - "4321:5432"
+      - "5432:5432"
     networks:
       - network-prod
+
+  nginx:
+    image: nginx:1.19.3
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./static:/var/html/static/
+    depends_on:
+      - backend-prod
+
+  redis:
+    image: bitnami/redis:6.0.16
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - network-prod
+      - default
+    ports:
+      - "6379:6379"
+
+  worker-dev:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+      args:
+        - DJANGO_ENV=development
+    volumes:
+      - ./:/home/www/app/
+    ports:
+      [ ]
+    command: celery -A config.celery:app worker --loglevel=INFO
+    depends_on:
+      - backend-dev
+
+  worker-prod:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+      args:
+        - DJANGO_ENV=production
+    ports:
+      [ ]
+    command: celery -A config.celery:app worker --loglevel=INFO
+    depends_on:
+      - backend-prod
 
 networks:
   default:

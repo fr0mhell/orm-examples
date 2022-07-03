@@ -1,5 +1,5 @@
 # Web framework
-django
+django==3.2.13
 
 # Authentication system with 'batteries included'
 django-allauth
@@ -8,7 +8,7 @@ django-allauth
 djangorestframework
 
 # Auth API
-dj-rest-auth
+dj_rest_auth
 
 # Bulk API
 djangorestframework-bulk
@@ -27,6 +27,9 @@ celery
 
 # Task queue backend and broker
 redis
+
+# Cache
+django-redis
 
 # More powerful Python console
 ipython

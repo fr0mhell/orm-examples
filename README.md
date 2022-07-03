@@ -157,3 +157,9 @@ curl backend-dev
 ```shell
 curl backend-dev:8000
 ```
+
+## Инфраструктура Django-проекта
+
+```shell
+export DJANGO_SETTINGS_MODULE="config.production"
+```
