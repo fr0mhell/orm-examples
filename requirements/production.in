@@ -1,5 +1,5 @@
 # Web framework
-django
+django==3.2.13
 
 # Authentication system with 'batteries included'
 django-allauth

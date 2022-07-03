@@ -1,3 +1,4 @@
+import sys
 from .common import *
 
 DEBUG = True
@@ -7,6 +8,9 @@ PROJECT_ENV = 'development'
 INSTALLED_APPS += [
     'debug_toolbar',
 ]
+
+if 'celery' in sys.argv[0]:
+    DEBUG = False
 
 DATABASES = {
     'default': {

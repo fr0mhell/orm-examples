@@ -13,6 +13,11 @@ start-dev:
 filldb:
 	python3 manage.py filldb
 
+collectstatic:
+	python manage.py collectstatic
+
+start-local: makemig migrate filldb collectstatic createlocalsu
+
 makemig-prod:
 	docker-compose exec -it backend-prod python manage.py makemigrations
 
@@ -27,6 +32,3 @@ filldb-prod:
 
 start-prod:
 	docker-compose up -d backend-prod db-prod nginx redis
-
-collectstatic:
-	python manage.py collectstatic
